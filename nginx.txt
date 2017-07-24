@@ -1,0 +1,24 @@
+# 安装
+yum --disablerepo=\* --enablerepo=c6-media install gcc gcc-c++ openssl openssl-devel cyrus-sasl-md5 
+
+tar zxvf nginx-1.10.1.tar.gz
+tar zxvf zlib-1.2.8.tar.gz
+tar zxvf pcre-8.39.tar.gz
+
+cd nginx-1.10.1
+./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-pcre=../pcre-8.39 --with-zlib=../zlib-1.2.8
+make && make install
+
+# 安装PHP
+yum --disablerepo=\* --enablerepo=c6-media install gcc gcc-c++ libxml2 libxml2-devel autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel  zlib zlib-devel glibc glibc-devel glib2 glib2-devel
+tar zxvf php-5.6.22.tar.gz
+cd php-5.6.22
+
+./configure --prefix=/usr/local/php-fpm --enable-fpm --with-zlib --with-mysql --with-pdo-mysql --enable-mbstring --with-gd --with-png-dir=/usr/lib64 --with-jpeg-dir=/usr/lib64 --with-freetype-dir=/usr/lib64
+
+# 32bit
+./configure --prefix=/usr/local/php-fpm --enable-fpm --with-zlib --with-mysql --with-pdo-mysql --enable-mbstring --with-gd --with-png-dir=/usr/lib --with-jpeg-dir=/usr/lib --with-freetype-dir=/usr/lib
+
+make && make install
+拷贝fpm配置文件:
+cp etc/php-fpm.conf.default etc/php-fpm.conf
